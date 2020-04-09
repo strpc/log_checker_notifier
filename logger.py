@@ -5,12 +5,12 @@ import logging.handlers as handlers
 
 from config import DIR_NAME_LOG, FILE_NAME_LOG, LOCAL_LOGS_DIRECTORY
 
-
-try:
-    os.mkdir(DIR_NAME_LOG)
-    os.mkdir(LOCAL_LOGS_DIRECTORY)
-except:
-    create("Ошибка при создании папок для логов")
+if not os.path.exists(DIR_NAME_LOG) or not os.path.exists(LOCAL_LOGS_DIRECTORY):
+    try:
+        os.mkdir(DIR_NAME_LOG)
+        os.mkdir(LOCAL_LOGS_DIRECTORY)
+    except:
+        logging.getLogger().error('Ошибка при создании папки для логов.')
 
 
 formatter = logging.Formatter(
